@@ -4,9 +4,6 @@ namespace App\Repositories\Contracts;
 
 use App\Models\User;
 
-/**
- *
- */
 interface UserRepositoryInterface {
     /**
      * @param array $data
