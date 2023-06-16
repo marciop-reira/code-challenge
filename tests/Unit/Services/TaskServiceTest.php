@@ -57,14 +57,20 @@ it('should be able to update a task', function () {
         'is_completed' => true
     ];
 
-    $result = $this->taskService->updateTask(
-        $createdTask->id,
-        $this->userId,
-        $newData
-    );
+    $result = $this->taskService->updateTask($createdTask->id, $this->userId, $newData);
 
     expect($result->toArray())->toMatchArray($newData)
         ->and($result->completed_at)->not->toBeNull();
+});
+
+it('should be able to update a task to not completed', function () {
+    $createdTask = $this->taskRepository->create($this->task->toArray());
+    $this->taskService->updateTask($createdTask->id,  $this->userId, ['is_completed' => true]);
+
+    $result = $this->taskService->updateTask($createdTask->id,  $this->userId, ['is_completed' => false]);
+
+    expect($result->is_completed)->toBeFalse()
+        ->and($result->completed_at)->toBeNull();
 });
 
 it('should not be able to update a non-existing task', function () {
