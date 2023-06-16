@@ -2,14 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 
-use \App\Http\Controllers\UserController;
-use \App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TaskController;
 
 Route::get('/', function () {
     return response()->json(['message' => 'Buzzvel Code Challenge']);
 });
 
 Route::post('/users', [UserController::class, 'store']);
+Route::middleware(['auth'])->apiResource('/tasks', TaskController::class);
 
 Route::group([
     'middleware' => 'api',

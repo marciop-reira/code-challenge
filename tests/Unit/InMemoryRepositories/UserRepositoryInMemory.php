@@ -1,16 +1,25 @@
 <?php
 
-namespace App\Repositories\InMemory;
+namespace Tests\Unit\InMemoryRepositories;
 
 use App\Models\User;
 use App\Repositories\Contracts\UserRepositoryInterface;
+use Illuminate\Support\Collection;
 
 class UserRepositoryInMemory implements UserRepositoryInterface {
+
     /**
-     * @param array $users
+     * @var Collection
      */
-    public function __construct(private array $users = [])
-    {}
+    private Collection $users;
+
+    /**
+     *
+     */
+    public function __construct()
+    {
+        $this->users = collect();
+    }
 
     /**
      * @param array $data
@@ -20,7 +29,7 @@ class UserRepositoryInMemory implements UserRepositoryInterface {
     {
         $user = new User($data);
 
-        $this->users[] = $user;
+        $this->users->push($user);
 
         return $user;
     }
